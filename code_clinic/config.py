@@ -36,11 +36,11 @@ def get_calendar():
    service = build('calendar', 'v3', credentials=creds)
    return service
 
+
 def u_input():
     '''Taking in user input for creating an event'''
  
-    print("Welcome to code_clinics")
-    print("Add an event ")
+    print("Adding an event ... ")
     summary = input("Event (ie 'code_clinic') : ")
     start_time = input("Date & Time (ie 25 Jul 13.30pm ) : ")
     desc = input("Topic of speciality : ")
@@ -51,8 +51,6 @@ def u_input():
 
 def add_event(start_time, summary, desc):
    
-#    attendees = None
-#    location = None
    service = get_calendar()
    timer = list(datefinder.find_dates(start_time))
 
@@ -76,7 +74,51 @@ def add_event(start_time, summary, desc):
    print("ends at: ", event_result['end']['dateTime'])
 
 
+def cancel_s():
+    """
+        Delete an event from your calendar.
+    """
+    service = get_calendar()
+    event_id  = input("Please enter event ID to be cancelled : ")
+    # event = service.events().get(calendarId='primary', eventId=eventId).execute()
+    deleted_event = service.events().delete(calendarId='primary', eventId=event_id).execute()
+    print("Event deleted")
+    # logging.info('Event deleted: %s' % (event.get('htmlLink')))
+
+
+def view_calendar():
+
+    service = get_calendar()
+    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    print('Getting the upcoming 7 events\n')
+    events_result = service.events().list(calendarId='primary', timeMin=now,
+                                        maxResults=7, singleEvents=True,
+                                        orderBy='startTime').execute()
+    events = events_result.get('items', [])
+
+    if not events:
+        print('No upcoming events found.')
+    for event in events:
+        start = event['start'].get('dateTime', event['start'].get('date'))
+        print(start, event['summary'], event['id'])
+
+    print()
+
 if __name__ == "__main__":
 
-    get_calendar()
-    u_input()
+    print("Welcome to Code_Clinics\n")
+    while True:
+        print("What would you like to do?\nPress 1 for volunteer\nPress 2 to cancel volunteer slot\nPress 3 to view calendar\n")
+        option = input("Please enter number : ")
+
+        if option == '1':
+            u_input()
+
+        if option == '2':
+            cancel_s()    
+
+        if option == '3':
+            view_calendar() 
+
+        if option == 'off':
+            break   
