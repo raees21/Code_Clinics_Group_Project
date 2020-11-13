@@ -103,7 +103,10 @@ def view_calendar():
 
 if __name__ == "__main__":
 
-    print("Welcome to Code_Clinics\n")
+    print("\nWelcome to Code_Clinics\n")
+    print("Logging in ....")
+    service = get_calendar()
+    print()
     while True:
         print("What would you like to do?\nPress 0 to exit\nPress 1 for volunteer\nPress 2 to cancel volunteer slot\nPress 3 to view calendar\n")
         option = input("Please enter number : ")
