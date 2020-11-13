@@ -67,11 +67,8 @@ def add_event(start_time, summary, desc):
        }
    ).execute()
 
-   print("created event")
-   print("id: ", event_result['id'])
-   print("summary: ", event_result['summary'])
-   print("starts at: ", event_result['start']['dateTime'])
-   print("ends at: ", event_result['end']['dateTime'])
+   print('Event created: %s' % (event_result.get('htmlLink')))
+   print()
 
 
 def cancel_s():
@@ -82,7 +79,7 @@ def cancel_s():
     event_id  = input("Please enter event ID to be cancelled : ")
     # event = service.events().get(calendarId='primary', eventId=eventId).execute()
     deleted_event = service.events().delete(calendarId='primary', eventId=event_id).execute()
-    print("Event deleted")
+    print("Event deleted\n")
     # logging.info('Event deleted: %s' % (event.get('htmlLink')))
 
 
@@ -100,7 +97,7 @@ def view_calendar():
         print('No upcoming events found.')
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'], event['id'])
+        print(start, event['summary'], 'Event ID : [',event['id'],']')
 
     print()
 
