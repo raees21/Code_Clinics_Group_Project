@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     print("Welcome to Code_Clinics\n")
     while True:
-        print("What would you like to do?\nPress 1 for volunteer\nPress 2 to cancel volunteer slot\nPress 3 to view calendar\n")
+        print("What would you like to do?\nPress 0 to exit\nPress 1 for volunteer\nPress 2 to cancel volunteer slot\nPress 3 to view calendar\n")
         option = input("Please enter number : ")
 
         if option == '1':
@@ -117,5 +117,6 @@ if __name__ == "__main__":
         if option == '3':
             view_calendar() 
 
-        if option == 'off':
+        if option == '0':
+            print("BYE...")
             break   
