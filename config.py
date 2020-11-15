@@ -102,7 +102,11 @@ def view_calendar():
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'], event['id'])
 
-    print()
+    
+
+    print(events_result)
+
+view_calendar()
 """
 if __name__ == "__main__":
 
