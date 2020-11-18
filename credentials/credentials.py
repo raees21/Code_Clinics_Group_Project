@@ -39,6 +39,3 @@ def getCredentials():
 
     return creds
 
-if __name__ == '__main__':
-    #SCOPES = ['https://www.googleapis.com/auth/calendar']
-    credentials = getCredentials() #insert your client_secret.json file path

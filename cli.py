@@ -2,8 +2,6 @@ import sys
 import config
 
 
-options = {"help" : ['usable commands','exit'], "event" : ["delete event", "schedule event"], "login": ["login"]}
-
 def cli_start():
     pass 
 
@@ -12,18 +10,15 @@ def check_arguments():
         return get_help()
 
     if len(sys.argv) == 2:
-        for x,y in options.items():
-            if sys.argv[1] == x:
-             var = x
 
         if var == "help":
             return get_help()
 
         elif var == "event":
-            return config.view_calendar()
+            return view_calendar()
 
         elif var == "login":
-            return config.get_calendar()
+            return get_calendar()
 
         else:
             print("Please enter valid command")
