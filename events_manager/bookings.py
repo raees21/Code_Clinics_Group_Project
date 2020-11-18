@@ -6,18 +6,16 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import credentials.credentials as credentials
 
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/calendar']
 
-CREDENTIALS_FILE = 'credentials.json'
+# def getCredentials():
 
-def get_calendar():
+    
+#    creds = credentials.getCredentials()
 
-    creds = 
-
-   service = build('calendar', 'v3', credentials=creds)
-   return service
+#    service = build('calendar', 'v3', credentials=creds)
+#    return service
 
 
 def u_input():
@@ -34,7 +32,7 @@ def u_input():
 
 def add_event(start_time, summary, desc):
    
-   service = get_calendar()
+   service = credentials.getCredentials()
    timer = list(datefinder.find_dates(start_time))
 
    if len(timer):
@@ -61,7 +59,7 @@ def cancel_s():
     """
         Delete an event from your calendar.
     """
-    service = get_calendar()
+    service = credentials.getCredentials()
     event_id  = input("Please enter event ID to be cancelled : ")
     # event = service.events().get(calendarId='primary', eventId=eventId).execute()
     deleted_event = service.events().delete(calendarId='primary', eventId=event_id).execute()
@@ -71,7 +69,7 @@ def cancel_s():
 
 def view_calendar():
 
-    service = get_calendar()
+    service = credentials.getCredentials()
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 7 events\n')
     events_result = service.events().list(calendarId='primary', timeMin=now,
@@ -84,30 +82,3 @@ def view_calendar():
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'], event['id'])
-
-    
-
-    print(events_result)
-
-view_calendar()
-"""
-if __name__ == "__main__":
-
-    print("Welcome to Code_Clinics\n")
-    while True:
-        print("What would you like to do?\nPress 1 for volunteer\nPress 2 to cancel volunteer slot\nPress 3 to view calendar\n")
-        option = input("Please enter number : ")
-
-        if option == '1':
-            u_input()
-
-        if option == '2':
-            cancel_s()    
-
-        if option == '3':
-            view_calendar() 
-
-        if option == 'off':
-            break   
-
-"""

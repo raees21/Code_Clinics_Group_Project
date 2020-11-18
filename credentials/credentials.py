@@ -37,5 +37,7 @@ def getCredentials():
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    return creds
+    service = build('calendar', 'v3', credentials=creds)
+
+    return service
 

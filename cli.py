@@ -1,6 +1,7 @@
 import sys
-import config
-
+#import config
+import events_manager.bookings as bookings
+import credentials.credentials as credentials
 
 def cli_start():
     pass 
@@ -11,14 +12,14 @@ def check_arguments():
 
     if len(sys.argv) == 2:
 
-        if var == "help":
+        if sys.argv[1] == "help":
             return get_help()
 
-        elif var == "event":
-            return view_calendar()
+        elif sys.argv[1] == "event":
+            return bookings.view_calendar()
 
-        elif var == "login":
-            return get_calendar()
+        elif sys.argv[1] == "login":
+            return credentials.getCredentials()
 
         else:
             print("Please enter valid command")
