@@ -6,6 +6,7 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+import credentials.credentials as credentials
 
 ini_time_for_now = datetime.datetime.now()
 
@@ -15,9 +16,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
 def main():
-    creds = 
-
-    service = build('calendar', 'v3', credentials=creds)
+    service = credentials.getCredentials()
 
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
