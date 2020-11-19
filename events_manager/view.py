@@ -56,7 +56,7 @@ def main():
     table = []
     for i in range(7):
         new_date = current_date + timedelta(days = i)
-        table.append([new_date])
+        table.append([new_date, "***********************", "********", "********", "*********"])
         #table.append([])
         new_date_str = str(new_date)
         for event in events:

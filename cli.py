@@ -3,6 +3,7 @@ import sys
 import events_manager.bookings as bookings
 import events_manager.view as calendar
 import credentials.credentials as credentials
+import events_manager.view as calendar
 
 def cli_start():
     pass 
@@ -30,10 +31,10 @@ def check_arguments():
 def get_help():
     print("""These are the Google calendar commands that can be used in various situations:
         
-setup and login
+Setup and Login
         login                  Creates the config file that will be used 
 
-scheduling events
+Scheduling Events
         view events            View available events
         volunteer              volunteer for event
         cancel volunteering    cancellation of volunteering
