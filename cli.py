@@ -1,6 +1,7 @@
 import sys
 #import config
 import events_manager.bookings as bookings
+import events_manager.view as calendar
 import credentials.credentials as credentials
 
 def cli_start():
@@ -16,7 +17,7 @@ def check_arguments():
             return get_help()
 
         elif sys.argv[1] == "event":
-            return bookings.view_calendar()
+            return calendar.main()
 
         elif sys.argv[1] == "login":
             return credentials.getCredentials()
