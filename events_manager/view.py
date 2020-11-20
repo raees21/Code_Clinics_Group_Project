@@ -28,35 +28,13 @@ def main():
                                         orderBy='startTime').execute()
                                         
     events = events_result.get('items', [])
-    print(type(events))
-    print(events)
-    # for k, info in events.items():
-    #     print("key")
-    #     for key in info:
-    #         print(key + ":", info(key))
     
     current_date = date.today()
-    for i in range(7):
-        new_date = current_date + timedelta(days = i)
-        print(new_date.strftime("%c"))
-        print('---------------------------------------------') # Anza
-        print('Start  '  , '\t', 'End    ', '\t', 'Details')
-        print('-------', '\t', '-------', '\t', '-------')
-        new_date_str = str(new_date)
-        for event in events:
-            date1 = event['start'].get('dateTime').split('T')[0]
-            if date1 == new_date_str:
-                start_time = event['start'].get('dateTime').split('T')[1].split('+')[0]
-                end_time = event['end'].get('dateTime').split('T')[1].split('+')[0]
-                organizer = event['organizer'].get('email')
-                #meets_link = event['conferenceData'].get('entryPoints').get('uri')
-                print(start_time,'\t', end_time,'\t', event['summary'],'\t','\t',organizer, "\t", '\t')
-        print('\n')
 
     table = []
     for i in range(7):
         new_date = current_date + timedelta(days = i)
-        table.append([new_date, "Events for the day listed below", "********", "********", "*********"])
+        table.append([new_date, "Events for the day listed below", "----------", "----------", "------------------------", "--------------------", "---------------"])
         #table.append([])
         new_date_str = str(new_date)
         for event in events:
@@ -67,24 +45,41 @@ def main():
                     start_time = event['start'].get('dateTime').split('T')[1].split('+')[0]
                     end_time = event['end'].get('dateTime').split('T')[1].split('+')[0]
                     organizer = event['creator'].get('email')
-                    # attendees = event['attendees']
-                    # print(attendees)
-                    if 'attendees' in event:
+
+                    if 'attendees' in event and 'hangoutLink' not in event:
                         attendee_list = []
                         attendees = event["attendees"]
-                        #print(attendees)
+
                         for attendee in attendees:
                             attendee_list.append(attendee['email'])
                         new = " ,".join(attendee_list)
-                        table.append([date1, organizer, start_time, end_time, event["summary"],new])
+                        table.append([date1, organizer, start_time, end_time, event["summary"],new, "No Meet Link"])    
+
+                    elif 'attendees' not in event and 'hangoutLink' in event:
+                        meet_link = event["hangoutLink"]
+                        table.append([date1, organizer, start_time, end_time, event["summary"],"No Attendees Currently", meet_link])
+
+
+                    elif 'attendees' in event and 'hangoutLink' in event:
+                        attendee_list = []
+                        attendees = event["attendees"]
+
+                        for attendee in attendees:
+                            attendee_list.append(attendee['email'])
+                        new = " ,".join(attendee_list)
+
+                        meet_link = event["hangoutLink"]
+                        table.append([date1, organizer, start_time, end_time, event["summary"],new, meet_link])
+
+
                     else:
-                        table.append([date1, organizer, start_time, end_time, event["summary"],"Booking available"])
-        table.append([])
+                        table.append([date1, organizer, start_time, end_time, event["summary"],"Booking available", "No Meet Link"])
+
+
+
+            table.append([])
             
-    #print(table)
-    #rint(tabulate(table))
-    print(tabulate(table, ["date", "organizer", "start time", "end time", "summary", "attendees"], tablefmt="fancy_grid"))
-    #print(tabulate(["organizer", "attendee", "date" , "start time", "end time", "details"]))
+    print(tabulate(table, ["Date", "Organizer", "Start Time", "End Time", "Summary", "Attendees", "Google Meet Link"], tablefmt="fancy_grid"))
 
 if __name__ == '__main__':
     main()
