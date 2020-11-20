@@ -1,11 +1,18 @@
-# Code_Clinics_Group_Project
+# Problem - Coding Clinic Booking System
 
+Refer to the Miro board for the project overview and specifications.
 
-The booking system will be implemented as a set of command-line tools that can run on any campus workstation.
+## Project Structure
 
-Run on the Linux version that you are using on campus
-Take command-line arguments as input
-It must have a help command that describes the command-line arguments
-It must provide output either to a file and/or to standard output, so that it can be used by another command-line tool in the system
-If providing output via standard output, it means the output can also be piped to a file using the linux pipe operators
-You can choose in what data format you will store any internal data, e.g. json, xml, or something else entirely.
+This repository contains the following files already:
+
+* `tests/` - this directory contains LMS acceptance tests, which will be run against your code when you submit.
+* `secrets/credentials.json` - this file needs to be used with the Google Python module in order to authenticate with the Google API
+* `clinic.py` - empty placeholder python file to get you going with the clinic setup and bookings
+* `calendar-sync.py` - empty placeholder python file to get started with the tool to sync calendars
+* `requirements.txt` - file to use with `PIP` to install Google Python module
+
+### To Test
+
+* To run all the acceptance tests: `python3 -m unittest tests/test_main.py`
+* _Note_: at the minimum, these (*unedited*) tests must succeed before you may submit the solution for review.

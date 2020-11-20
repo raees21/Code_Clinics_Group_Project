@@ -2,7 +2,7 @@ import sys
 #import config
 import events_manager.bookings as bookings
 import events_manager.view as calendar
-import credentials.credentials as credentials
+import credential as credentials
 import events_manager.view as calendar
 
 def cli_start():
@@ -22,6 +22,13 @@ def check_arguments():
 
         elif sys.argv[1] == "login":
             return credentials.getCredentials()
+        
+        if sys.argv[1] == "book":
+            date = input("Date & Time : ")
+            summary = input("Event Summary : ")
+            description = input ("Event Description : ")
+            creator = input("Volunteer Email : ")
+            return bookings.add_event(date, summary, description, creator)
 
         else:
             print("Please enter valid command")

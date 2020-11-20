@@ -6,7 +6,7 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import credentials.credentials as credentials
+import credential as credentials
 
 
 # def getCredentials():
@@ -30,29 +30,41 @@ def u_input():
     return summary, start_time, desc
     
 
-def add_event(start_time, summary, desc):
+def add_event(start_time, summary, desc, creator):
    
-   service = credentials.getCredentials()
-   timer = list(datefinder.find_dates(start_time))
+    service = credentials.getCredentials()
+    timer = list(datefinder.find_dates(start_time))
 
-   if len(timer):
-       start = timer[0]
-       end = start + timedelta(minutes = 30)
+    if len(timer):
+        start = timer[0]
+        end = start + timedelta(minutes = 30)
 
-   event_result = service.events().insert(calendarId='primary',
-       body={
-           "summary": summary,
-           "description": desc,
-           "start": {"dateTime": start.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
-           "end": {"dateTime": end.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
-       }
-   ).execute()
+    event_result = service.events().insert(calendarId="c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com",
+        body={
+            "summary": summary,
+            "description": desc,
+            "start": {"dateTime": start.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
+            "end": {"dateTime": end.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
+            'attendees': [{'email': creator}],
+        }
+    ).execute()
 
-   print("created event")
-   print("id: ", event_result['id'])
-   print("summary: ", event_result['summary'])
-   print("starts at: ", event_result['start']['dateTime'])
-   print("ends at: ", event_result['end']['dateTime'])
+    # event_result = service.events().insert(calendarId="primary",
+    #     body={
+    #         "summary": summary,
+    #         "description": desc,
+    #         "start": {"dateTime": start.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
+    #         "end": {"dateTime": end.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
+    #     }
+    # ).execute()
+
+    
+
+    print("created event")
+    print("id: ", event_result['id'])
+    print("summary: ", event_result['summary'])
+    print("starts at: ", event_result['start']['dateTime'])
+    print("ends at: ", event_result['end']['dateTime'])
 
 
 def cancel_s():
@@ -82,3 +94,4 @@ def view_calendar():
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
         print(start, event['summary'], event['id'])
+
