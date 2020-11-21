@@ -17,13 +17,13 @@ def check_arguments():
         if sys.argv[1] == "help":
             return get_help()
 
-        elif sys.argv[1] == "event":
+        elif sys.argv[1] == "events":
             return calendar.main()
 
         elif sys.argv[1] == "login":
             return credentials.getCredentials()
         
-        if sys.argv[1] == "book":
+        elif sys.argv[1] == "volunteer":
             date = input("Date & Time : ")
             summary = input("Event Summary : ")
             description = input ("Event Description : ")
@@ -42,7 +42,7 @@ Setup and Login
         login                  Creates the config file that will be used 
 
 Scheduling Events
-        view events            View available events
+        events                 View available events
         volunteer              volunteer for event
         cancel volunteering    cancellation of volunteering
         sign-up                sign-up for a volunteered event

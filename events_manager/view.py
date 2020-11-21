@@ -40,46 +40,49 @@ def main():
         for event in events:
             date1 = event['start'].get('dateTime').split('T')[0]
             if date1 == new_date_str:
-                    print(event)
-                    print("")
-                    start_time = event['start'].get('dateTime').split('T')[1].split('+')[0]
-                    end_time = event['end'].get('dateTime').split('T')[1].split('+')[0]
-                    organizer = event['creator'].get('email')
 
-                    if 'attendees' in event and 'hangoutLink' not in event:
-                        attendee_list = []
-                        attendees = event["attendees"]
+                start_time = event['start'].get('dateTime').split('T')[1].split('+')[0]
+                end_time = event['end'].get('dateTime').split('T')[1].split('+')[0]
+                organizer = event['creator'].get('email')
 
-                        for attendee in attendees:
-                            attendee_list.append(attendee['email'])
-                        new = " ,".join(attendee_list)
-                        table.append([date1, organizer, start_time, end_time, event["summary"],new, "No Meet Link"])    
+                if 'attendees' in event and 'hangoutLink' not in event:
+                    attendee_list = []
+                    attendees = event["attendees"]
 
-                    elif 'attendees' not in event and 'hangoutLink' in event:
-                        meet_link = event["hangoutLink"]
-                        table.append([date1, organizer, start_time, end_time, event["summary"],"No Attendees Currently", meet_link])
+                    for attendee in attendees:
+                        attendee_list.append(attendee['email'])
+                    new = " ,".join(attendee_list)
+                    table.append([date1, organizer, start_time, end_time, event["summary"],new, "No Meet Link"])    
 
 
-                    elif 'attendees' in event and 'hangoutLink' in event:
-                        attendee_list = []
-                        attendees = event["attendees"]
-
-                        for attendee in attendees:
-                            attendee_list.append(attendee['email'])
-                        new = " ,".join(attendee_list)
-
-                        meet_link = event["hangoutLink"]
-                        table.append([date1, organizer, start_time, end_time, event["summary"],new, meet_link])
+                elif 'attendees' not in event and 'hangoutLink' in event:
+                    meet_link = event["hangoutLink"]
+                    table.append([date1, organizer, start_time, end_time, event["summary"],"No Attendees Currently", meet_link])
 
 
-                    else:
-                        table.append([date1, organizer, start_time, end_time, event["summary"],"Booking available", "No Meet Link"])
+                elif 'attendees' in event and 'hangoutLink' in event:
+                    attendee_list = []
+                    attendees = event["attendees"]
+
+                    for attendee in attendees:
+                        attendee_list.append(attendee['email'])
+                    new = " ,".join(attendee_list)
+
+                    meet_link = event["hangoutLink"]
+                    table.append([date1, organizer, start_time, end_time, event["summary"],new, meet_link])
 
 
+                else:
+                    table.append([date1, organizer, start_time, end_time, event["summary"],"Booking available", "No Meet Link"])
 
-            table.append([])
-            
+                table.append([])       
+
+            else:
+                table.append([]) 
+
+
     print(tabulate(table, ["Date", "Organizer", "Start Time", "End Time", "Summary", "Attendees", "Google Meet Link"], tablefmt="fancy_grid"))
+
 
 if __name__ == '__main__':
     main()
