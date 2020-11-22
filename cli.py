@@ -1,4 +1,5 @@
 import sys
+import os.path
 #import config
 import events_manager.bookings as bookings
 import events_manager.view as calendar
@@ -30,6 +31,9 @@ def check_arguments():
             creator = input("Volunteer Email : ")
             return bookings.add_event(date, summary, description, creator)
 
+        elif sys.argv[1] == "cancel":
+            return bookings.view_calendar()
+
         else:
             print("Please enter valid command")
             return get_help()
@@ -44,7 +48,7 @@ Setup and Login
 Scheduling Events
         events                 View available events
         volunteer              volunteer for event
-        cancel volunteering    cancellation of volunteering
+        cancel                 cancellation of volunteering
         sign-up                sign-up for a volunteered event
         cancel event           cancels event booking made by student
 """)
