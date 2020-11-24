@@ -7,7 +7,7 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import credential as credentials
+import user_credentials.credential as credentials
 
 
 def u_input():
@@ -31,7 +31,7 @@ def add_event(start_time, summary, desc, creator):
         start = timer[0]
         end = start + timedelta(minutes = 30)
 
-    event_result = service.events().insert(calendarId="c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com",
+    event_result = service.events().insert(calendarId="c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com",
         body={
             "summary": summary,
             "description": desc,
@@ -56,9 +56,9 @@ def cancel_s(eventId):
     """
     service = credentials.getCredentials()
 
-    event = service.events().get(calendarId='c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com', eventId=eventId).execute()
+    event = service.events().get(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', eventId=eventId).execute()
 
-    deleted_event = service.events().delete(calendarId='c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com', eventId=eventId).execute()
+    deleted_event = service.events().delete(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', eventId=eventId).execute()
 
     print("Event deleted")
     # logging.info('Event deleted: %s' % (event.get('htmlLink')))
@@ -69,7 +69,7 @@ def view_calendar():
     service = credentials.getCredentials()
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 7 events\n')
-    events_result = service.events().list(calendarId='c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com', timeMin=now,
+    events_result = service.events().list(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', timeMin=now,
                                         maxResults=7, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])

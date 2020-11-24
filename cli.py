@@ -3,8 +3,9 @@ import os.path
 #import config
 import events_manager.bookings as bookings
 import events_manager.view as calendar
-import credential as credentials
+import user_credentials.credential as credentials
 import events_manager.view as calendar
+import Calender_login.credential as cal
 
 def cli_start():
     pass 
@@ -22,7 +23,10 @@ def check_arguments():
             return calendar.main()
 
         elif sys.argv[1] == "login":
-            return credentials.getCredentials()
+            return credentials.getCredentials(), credentials.get_service_calendar()
+
+        elif sys.argv[1] == "login2":
+            return cal.getCredentials()     
         
         elif sys.argv[1] == "volunteer":
             date = input("Date & Time : ")

@@ -6,7 +6,7 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import credential as credentials
+import user_credentials.credential as credentials
 from tabulate import tabulate
 
 ini_time_for_now = datetime.datetime.now()
@@ -23,7 +23,7 @@ def main():
     # Call the Calendar API
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     
-    events_result = service.events().list(calendarId='c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com', timeMin=now,
+    events_result = service.events().list(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', timeMin=now,
                                         maxResults=10, singleEvents=True,
                                         orderBy='startTime').execute()
                                         
