@@ -5,7 +5,6 @@ import events_manager.bookings as bookings
 import events_manager.view as calendar
 import user_credentials.credential as credentials
 import events_manager.view as calendar
-import Calender_login.credential as cal
 
 def cli_start():
     pass 

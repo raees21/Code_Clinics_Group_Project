@@ -24,20 +24,20 @@ def u_input():
 
 def add_event(start_time, summary, desc, creator):
    
-    service = credentials.getCredentials()
+    service = credentials.get_service_calendar()
     timer = list(datefinder.find_dates(start_time))
 
     if len(timer):
         start = timer[0]
         end = start + timedelta(minutes = 30)
 
-    event_result = service.events().insert(calendarId="c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com",
+    event_result = service.events().insert(calendarId="code-clinics@helical-math-295108.iam.gserviceaccount.com",
         body={
             "summary": summary,
             "description": desc,
             "start": {"dateTime": start.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
             "end": {"dateTime": end.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
-            'attendees': [{'email': creator}],
+            'attendees': [{'email': 'raziz@student.wethinkcode.co.za'}],
         }
     ).execute()
     
@@ -56,9 +56,9 @@ def cancel_s(eventId):
     """
     service = credentials.getCredentials()
 
-    event = service.events().get(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', eventId=eventId).execute()
+    event = service.events().get(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', eventId=eventId).execute()
 
-    deleted_event = service.events().delete(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', eventId=eventId).execute()
+    deleted_event = service.events().delete(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', eventId=eventId).execute()
 
     print("Event deleted")
     # logging.info('Event deleted: %s' % (event.get('htmlLink')))
@@ -69,7 +69,7 @@ def view_calendar():
     service = credentials.getCredentials()
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 7 events\n')
-    events_result = service.events().list(calendarId='c_nf7rjg7u6b3hchbgi670hfqca4@group.calendar.google.com', timeMin=now,
+    events_result = service.events().list(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', timeMin=now,
                                         maxResults=7, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
