@@ -1,10 +1,12 @@
 import sys
 import os.path
 #import config
-import events_manager.bookings as bookings
-import events_manager.view as calendar
+# import events_manager.bookings as bookings
 import user_credentials.credential as credentials
-import events_manager.view as calendar
+from student import bookings
+from volunteers import bookings
+import calendars.view as calendar
+
 
 def cli_start():
     pass 
@@ -15,40 +17,41 @@ def check_arguments():
 
     if len(sys.argv) == 2:
 
-        if sys.argv[1] == "help":
+        if str(sys.argv[1]).lower() == "help":
             return get_help()
 
-        elif sys.argv[1] == "events":
+        elif str(sys.argv[1]).lower() == "events":
             return calendar.main()
 
-        elif sys.argv[1] == "login":
+        elif str(sys.argv[1]).lower() == "login":
             return credentials.getCredentials(), credentials.get_service_calendar()
 
-        elif sys.argv[1] == "login2":
-            return cal.getCredentials()     
+        elif str(sys.argv[1]).lower() == "login2":
+            return credentials.getCredentials()     
         
-        elif sys.argv[1] == "volunteer":
-            date = input("Date & Time : ")
-            summary = input("Event Summary : ")
-            description = input ("Event Description : ")
-            creator = input("Volunteer Email : ")
+        elif str(sys.argv[1]).lower() == "volunteer":
+            date = input("\u001b[1m Date & Time : ")
+            summary = input("\u001b[1m Event Summary : ")
+            description = input ("\u001b[1m Event Description : ")
+            creator = input("\u001b[1m Volunteer Email : ")
             return bookings.add_event(date, summary, description, creator)
 
-        elif sys.argv[1] == "cancel":
+        elif sys.argv[1].lower() == "cancel":
             return bookings.view_calendar()
 
         else:
-            print("Please enter valid command")
+            print("Please enter a valid command")
             return get_help()
 
 
 def get_help():
-    print("""These are the Google calendar commands that can be used in various situations:
+    print("""
+\u001b[1m  \u001b[44m These are the Google calendar commands that can be used in various situations:\u001b[0m
         
-Setup and Login
+\u001b[1m \u001b[4m Setup and Login \u001b[0m
         login                  Creates the config file that will be used 
 
-Scheduling Events
+\u001b[1m \u001b[4m Scheduling Events \u001b[0m
         events                 View available events
         volunteer              volunteer for event
         cancel                 cancellation of volunteering
@@ -62,5 +65,5 @@ def get_event():
     print("ifejf")
 
 
-
-check_arguments()
+if __name__ == "__main__":
+    check_arguments()

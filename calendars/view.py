@@ -81,7 +81,7 @@ def main():
                 table.append([]) 
 
 
-    print(tabulate(table, ["Date", "Organizer", "Start Time", "End Time", "Summary", "Attendees", "Google Meet Link"], tablefmt="fancy_grid"))
+    print(tabulate(table, ["\u001b[1m Date \u001b[0m", "\u001b[1m Organizer \u001b[0m", "\u001b[1m Start Time \u001b[0m", "\u001b[1m End Time \u001b[0m", "\u001b[1m Summary \u001b[0m", "\u001b[1m Attendees \u001b[0m", "\u001b[1m Google Meet Link \u001b[0m"], tablefmt="fancy_grid"))
 
 
 if __name__ == '__main__':
