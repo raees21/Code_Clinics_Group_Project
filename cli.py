@@ -1,7 +1,7 @@
 import sys
 import os.path
 #import config
-# import events_manager.bookings as bookings
+#import events_manager.bookings as bookings
 import user_credentials.credential as credentials
 from student import bookings
 from volunteers import bookings

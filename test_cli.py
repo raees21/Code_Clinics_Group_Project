@@ -9,7 +9,8 @@ import cli
 class TestCli(unittest.TestCase):
 
     def test_check_arguments(self):
-        pass
+        with captured
+
 
     def test_check_arguments_fx(self):
         pass
