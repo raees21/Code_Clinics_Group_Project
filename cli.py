@@ -6,38 +6,38 @@ import user_credentials.credential as credentials
 from student import bookings
 from volunteers import bookings
 import calendars.view as calendar
-import student_info
+import student.student_info as student
 
 def cli_start():
     pass 
 
-def check_arguments():
-    if len(sys.argv) == 1:
+def check_arguments(args=sys.argv):
+    if len(args) == 1:
         return get_help()
 
-    if len(sys.argv) == 2:
+    if len(args) == 2:
 
-        if str(sys.argv[1]).lower() == "help":
+        if str(args[1]).lower() == "help":
             return get_help()
 
-        elif str(sys.argv[1]).lower() == "events":
+        elif str(args[1]).lower() == "events":
             return calendar.main()
 
-        elif str(sys.argv[1]).lower() == "login":
-            student_info.login_details()
+        elif str(args[1]).lower() == "login":
+            student.login_details()
             return credentials.getCredentials(), credentials.get_service_calendar()
 
-        elif str(sys.argv[1]).lower() == "login2":
+        elif str(args[1]).lower() == "login2":
             return credentials.getCredentials()     
         
-        elif str(sys.argv[1]).lower() == "volunteer":
+        elif str(args[1]).lower() == "volunteer":
             date = input("\u001b[1m Date & Time : ")
             summary = input("\u001b[1m Event Summary : ")
             description = input ("\u001b[1m Event Description : ")
             creator = input("\u001b[1m Volunteer Email : ")
             return bookings.add_event(date, summary, description, creator)
 
-        elif sys.argv[1].lower() == "cancel":
+        elif args[1].lower() == "cancel":
             return bookings.view_calendar()
 
         else:
