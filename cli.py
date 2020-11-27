@@ -6,7 +6,7 @@ import user_credentials.credential as credentials
 from student import bookings
 from volunteers import bookings
 import calendars.view as calendar
-
+import student_info
 
 def cli_start():
     pass 
@@ -24,6 +24,7 @@ def check_arguments():
             return calendar.main()
 
         elif str(sys.argv[1]).lower() == "login":
+            student_info.login_details()
             return credentials.getCredentials(), credentials.get_service_calendar()
 
         elif str(sys.argv[1]).lower() == "login2":
