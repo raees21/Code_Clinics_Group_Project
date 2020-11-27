@@ -23,7 +23,7 @@ def getCredentials():
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    path = os.psth.expanduser('~/')
+    path = os.path.expanduser('~/')
     if os.path.exists(path +'token.pickle'):
         with open(path + 'token.pickle', 'rb') as token:
             creds = pickle.load(token)
