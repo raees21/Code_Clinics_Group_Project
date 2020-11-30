@@ -1,6 +1,7 @@
 import unittest
 import sys
 import cli
+from calendars import view as calendar
 from io import StringIO
 from test_base import captured_io
 from test_base import run_unittests
@@ -10,10 +11,11 @@ import os
 
 
 
+
 class TestCli(unittest.TestCase):
     # @patch (sys.stdin, "python3 cli.py help")
 
-    @patch ("sys.stdin", StringIO("karend\nkarend@student.wethinkcoe.co.za\nfakepassword") )
+    # @patch ("sys.stdin", StringIO("karend\nkarend@student.wethinkcoe.co.za\nfakepassword") )
 #     def test_check_arguments(self):
 #             sys.stdout = StringIO()
 #             cli.check_arguments(args=['cli.py', 'login'])
@@ -24,24 +26,28 @@ class TestCli(unittest.TestCase):
 # """)
 
     def test_check_arguments_fx(self):
-        pass
+        sys.stdout = StringIO()
+        cli.check_arguments( args = ['cli.py', 'events'])
+        self.assertEqual(sys.stdout.getvalue(), calendar.main())
 
     def test_help_fx(self):
         sys.stdout = StringIO()
         cli.check_arguments(args=['cli.py', 'help'])
-        self.assertEqual(sys.stdout.getvalue(),"""
-\u001b[1m  \u001b[44m These are the Google calendar commands that can be used in various situations:\u001b[0m
+    print(cli.check_arguments(args=['cli.py', 'help']))
+#         self.assertEqual(sys.stdout.getvalue(), """
+# \u001b[1m  \u001b[44m These are the Google calendar commands that can be used in various situations:\u001b[0m
+        
+# \u001b[1m \u001b[4m Setup and Login \u001b[0m
+#         login                  Creates the config file that will be used 
 
-\u001b[1m \u001b[4m Setup and Login \u001b[0m
-        login                  Creates the config file that will be used 
+# \u001b[1m \u001b[4m Scheduling Events \u001b[0m
+#         events                 View available events
+#         volunteer              volunteer for event
+#         cancel                 cancellation of volunteering
+#         sign-up                sign-up for a volunteered event
+#         cancel event           cancels event booking made by student
+#         """)
 
-\u001b[1m \u001b[4m Scheduling Events \u001b[0m
-        events                 View available events
-        volunteer              volunteer for event
-        cancel                 cancellation of volunteering
-        sign-up                sign-up for a volunteered event
-        cancel event           cancels event booking made by student
-""")
 
 
 if __name__ == '__main__' :

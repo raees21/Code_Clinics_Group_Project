@@ -11,7 +11,7 @@ import student.student_info as student
 def cli_start():
     pass 
 
-def check_arguments(args=sys.argv):
+def check_arguments(args = sys.argv):
     if len(args) == 1:
         return get_help()
 
@@ -58,7 +58,7 @@ def get_help():
         cancel                 cancellation of volunteering
         sign-up                sign-up for a volunteered event
         cancel event           cancels event booking made by student
-""")
+        """)
 
 
 def get_event():
