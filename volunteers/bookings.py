@@ -10,16 +10,16 @@ from google.auth.transport.requests import Request
 import user_credentials.credential as credentials
 
 
-def u_input():
-    '''Taking in user input for creating an event'''
+# def u_input():
+#     '''Taking in user input for creating an event'''
  
-    print("Adding an event ... ")
-    summary = input("Event (ie 'code_clinic') : ")
-    start_time = input("Date & Time (ie 25 Jul 13.30pm ) : ")
-    desc = input("Topic of speciality : ")
-    add_event(start_time, summary, desc)
+#     print("Adding an event ... ")
+#     summary = input("Event (ie 'code_clinic') : ")
+#     start_time = input("Date & Time (ie 25 Jul 13.30pm ) : ")
+#     desc = input("Topic of speciality : ")
+#     add_event(start_time, summary, desc)
 
-    return summary, start_time, desc
+#     return summary, start_time, desc
     
 
 def add_event(start_time, summary, desc, creator):
@@ -29,7 +29,7 @@ def add_event(start_time, summary, desc, creator):
 
     if len(timer):
         start = timer[0]
-        end = start + timedelta(minutes = 30)
+        end = start + timedelta(minutes = 90)
 
     event_result = service.events().insert(calendarId="code-clinics@helical-math-295108.iam.gserviceaccount.com",
         body={
