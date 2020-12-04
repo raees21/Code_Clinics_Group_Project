@@ -30,12 +30,34 @@ def check_arguments(args = sys.argv):
         elif str(args[1]).lower() == "login2":
             return credentials.getCredentials()     
         
-        elif str(args[1]).lower() == "volunteer":
-            date = input("\u001b[1m Date & Time : ")
-            summary = input("\u001b[1m Event Summary : ")
-            description = input ("\u001b[1m Event Description : ")
-            creator = input("\u001b[1m Volunteer Email : ")
-            return bookings.add_event(date, summary, description, creator)
+        elif sys.argv[1].lower() == "volunteer":
+
+            with open ("login_info","r") as email:
+                mail = email.readlines()
+                v_mail = mail[1].replace("\n", "")
+                # print(v_mail)
+
+            conf = ""
+            date = input("Date & Time : ")
+            summary = input("Event Summary : ")
+            description = input ("Event Description : ")
+            creator = v_mail
+            meet =  input("Would you like to set a google-meet (Y/N) : ")
+           
+            return bookings.add_event(date, summary, description, creator, meet)
+        
+        elif sys.argv[1] == "patient":
+
+            with open ("login_info","r") as email:
+                mail = email.readlines()
+                p_mail = mail[1].replace("\n", "")
+
+            calendar = bookings.view_calendar()
+            slot = int(input("Please a slot number to book : "))
+            patient = p_mail
+            service = credentials.getCredentials()
+            
+            return update.addEventProperty(service, patient, slot, calendarId='c_79einr1qumsjbjatip5f9tfacs@group.calendar.google.com')
 
         elif args[1].lower() == "cancel":
             return bookings.view_calendar()
