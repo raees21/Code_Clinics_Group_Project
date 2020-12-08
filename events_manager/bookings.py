@@ -3,12 +3,14 @@ import datetime
 import datefinder
 import pickle
 import os.path
+from uuid import uuid4
 from datetime import timedelta
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import user_credentials.credential as credentials
+import credential as credentials
 
+event_id = []
 
 def u_input():
     '''Taking in user input for creating an event'''
@@ -22,26 +24,37 @@ def u_input():
     return summary, start_time, desc
     
 
-def add_event(start_time, summary, desc, creator):
+def add_event(start_time, summary, desc, creator, meet):
    
-    service = credentials.get_service_calendar()
+    service = credentials.getCredentials()
     timer = list(datefinder.find_dates(start_time))
+
+    '''ADDS MEETS link'''
+    conf = ''
+
+    if meet.lower() == "y":
+
+        conf = {"createRequest": {"requestId": f"{uuid4().hex}","conferenceSolutionKey": {"type": "hangoutsMeet"}}}
+
+    if meet.lower() == "n":
+        conf = None    
+    
+    '''end of meets condition'''
 
     if len(timer):
         start = timer[0]
-        end = start + timedelta(minutes = 30)
+        end = start + timedelta(minutes = 90)
 
-    event_result = service.events().insert(calendarId="code-clinics@helical-math-295108.iam.gserviceaccount.com",
+    event_result = service.events().insert(calendarId="codeclinics00@gmail.com",
         body={
             "summary": summary,
             "description": desc,
             "start": {"dateTime": start.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
             "end": {"dateTime": end.strftime("%Y-%m-%dT%H:%M:%S"), "timeZone": 'CAT'},
-            'attendees': [{'email': 'raziz@student.wethinkcode.co.za'}],
-        }
+            "attendees": [{'email': creator}],
+            "conferenceData" : conf,
+        },conferenceDataVersion=1
     ).execute()
-    
-
     print("created event")
     print("id: ", event_result['id'])
     print("summary: ", event_result['summary'])
@@ -49,6 +62,26 @@ def add_event(start_time, summary, desc, creator):
     print("ends at: ", event_result['end']['dateTime'])
 
 
+def addEventProperty(service, patient, eventId,calendarId='codeclinics00@gmail.com'):
+    global event_id
+    
+    '''Start event joining'''
+    id = event_id[eventId]
+    
+    event = service.events().get(calendarId=calendarId, eventId=id).execute()
+    creator = event["attendees"]
+
+    for i in creator:
+        creator = creator[0]
+        creator = creator['email']
+
+    event["attendees"] = [{'email': patient},{'email' : creator}]
+    updated_event = service.events().update(calendarId=calendarId, eventId=id, body=event).execute()
+
+    
+    print(updated_event['updated'])
+    print("success")
+'''end event joining'''
 
 def cancel_s(eventId):
     """
@@ -56,25 +89,25 @@ def cancel_s(eventId):
     """
     service = credentials.getCredentials()
 
-    event = service.events().get(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', eventId=eventId).execute()
+    event = service.events().get(calendarId='codeclinics00@gmail.com', eventId=eventId).execute()
 
-    deleted_event = service.events().delete(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', eventId=eventId).execute()
+    deleted_event = service.events().delete(calendarId='codeclinics00@gmail.com', eventId=eventId).execute()
 
     print("Event deleted")
-    # logging.info('Event deleted: %s' % (event.get('htmlLink')))
-
 
 def view_calendar():
+
+    global event_id
 
     service = credentials.getCredentials()
     now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
     print('Getting the upcoming 7 events\n')
-    events_result = service.events().list(calendarId='code-clinics@helical-math-295108.iam.gserviceaccount.com', timeMin=now,
+    events_result = service.events().list(calendarId='codeclinics00@gmail.com', timeMin=now,
                                         maxResults=7, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
 
-    event_id = []
+    # event_id = []
 
     current_date = date.today()
     for i in range(7):
@@ -98,7 +131,13 @@ def view_calendar():
                     new = " ,".join(attendee_list)
                     event_sum = event["summary"]
                     event_id.append(event['id'])
-                    print(f"{i}. {date1} {organizer} {start_time} {end_time} {event_sum} {new} No Meet Link")
+
+                    if organizer == "mtshishi@student.wethinkcode.co.za":
+                        print(f"{i}. {date1} {organizer} {start_time} {end_time} {event_sum} {new} No Meet Link")
+
+                    else:
+                        print("No events ")
+
 
 
                 elif 'attendees' not in event and 'hangoutLink' in event:
@@ -129,8 +168,8 @@ def view_calendar():
                 print("")    
 
 
-    event_id_cancel  = int(input("Please enter event number to be cancelled : "))
+    # event_id_cancel  = int(input("Please enter event number to be cancelled : "))
 
-    return cancel_s(event_id[event_id_cancel])
+    # return cancel_s(event_id[event_id_cancel])
 
-
+    return event_id
