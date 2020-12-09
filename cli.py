@@ -12,22 +12,23 @@ import events_manager
 def cli_start():
     pass 
 
-def check_arguments():
-    if len(sys.argv) == 1:
+
+def check_arguments(args=sys.argv):
+    if len(args) == 1:
         return get_help()
 
-    if len(sys.argv) == 2:
+    if len(args) == 2:
 
-        if sys.argv[1] == "help":
+        if args[1] == "help":
             return get_help()
 
-        elif sys.argv[1] == "events":
+        elif args[1] == "events":
             return events_manager.view.main()
 
-        elif sys.argv[1] == "login":
+        elif args[1] == "login":
             return credentials.getCredentials()
         
-        elif sys.argv[1] == "volunteer":
+        elif args[1] == "volunteer":
             conf = ""
             date = input("Date & Time : ")
             summary = input("Event Summary : ")
@@ -37,7 +38,7 @@ def check_arguments():
            
             return bookings.add_event(date, summary, description, creator, meet)
 
-        elif sys.argv[1] == "patient":
+        elif args[1] == "patient":
 
             calendar = bookings.view_calendar()
             slot = int(input("Please a slot number to book : "))
@@ -47,15 +48,15 @@ def check_arguments():
             return update.addEventProperty(service, patient, slot, calendarId='codeclinics00@gmail.com')
 
 
-        elif sys.argv[1] == "cancel":
+        elif args[1] == "cancel":
             return bookings.view_calendar()
 
         else:
             print("Please enter valid command")
             return get_help()
 
-    if len(sys.argv) == 3:
-        if sys.argv[1] == "events":
+    if len(args) == 3:
+        if args[1] == "events":
             return events_manager.view.day_details(str(sys.argv[2]))
 
 
