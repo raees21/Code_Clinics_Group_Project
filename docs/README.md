@@ -4,7 +4,7 @@ Easily check and modify your Google Calendar using Google Calendar API.
 ## Implementation
 
 Language version : Python 3.6. <br />
-Operating System : MacOS High Sierra.
+Operating System : Debian.
 
 ## Getting Started
 
@@ -19,7 +19,3 @@ Install the set of dependencies : <br />
 ```
 pip install -r requirements.txt
 ```
-
-## Authors
-
-Alexandra Benamar
