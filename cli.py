@@ -7,12 +7,9 @@ import calendar_setup
 import login_details
 
 args = sys.argv
-def cli_start():
-    pass 
 
 def check_arguments(args):
     """"""
-    path = os.path.expanduser('~/')
 
     if len(args) == 1:
         return get_help()
@@ -24,7 +21,7 @@ def check_arguments(args):
         return credentials.getCredentials()
 
 
-    if (len(args) == 2 or len(args) == 3):
+    if (len(args) == 2 or len(args) == 3) and os.path.exists('login_info'):
         
         if args[1] == "help":
             return get_help()
@@ -34,10 +31,6 @@ def check_arguments(args):
                 return view.main()
             if len(args) == 3:
                 return calendar_setup.view.day_details(str(args[2]))
-
-
-        elif args[1] == "login":
-            return credentials.getCredentials()
 
         elif args[1] == "volunteer" and "cancel" in args :
             return bookings.volunteer_cancel_slot()
@@ -87,7 +80,10 @@ def check_arguments(args):
         else:
             print("Please enter valid command")
             return get_help()
-
+    else:
+        print('Please login using')
+        print('')
+        print('    cli login')
 
 def get_help():
     """
