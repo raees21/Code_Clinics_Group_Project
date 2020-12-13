@@ -6,44 +6,43 @@ import credential as credentials
 import calendar_setup
 import login_details
 
-
+args = sys.argv
 def cli_start():
     pass 
 
-def check_arguments():
+def check_arguments(args):
     """"""
-
     path = os.path.expanduser('~/')
 
-    if len(sys.argv) == 1:
+    if len(args) == 1:
         return get_help()
 
-    if len(sys.argv) == 2 and sys.argv[1] == "login":
+    if len(args) == 2 and args[1] == "login":
         
         login_details.login_func()
         
         return credentials.getCredentials()
 
 
-    if (len(sys.argv) == 2 or len(sys.argv) == 3):
+    if (len(args) == 2 or len(args) == 3):
         
-        if sys.argv[1] == "help":
+        if args[1] == "help":
             return get_help()
 
-        elif sys.argv[1] == "events":
-            if len(sys.argv) == 2:
+        elif args[1] == "events":
+            if len(args) == 2:
                 return view.main()
-            if len(sys.argv) == 3:
-                return calendar_setup.view.day_details(str(sys.argv[2]))
+            if len(args) == 3:
+                return calendar_setup.view.day_details(str(args[2]))
 
 
-        elif sys.argv[1] == "login":
+        elif args[1] == "login":
             return credentials.getCredentials()
 
-        elif sys.argv[1] == "volunteer" and "cancel" in sys.argv :
+        elif args[1] == "volunteer" and "cancel" in args :
             return bookings.volunteer_cancel_slot()
 
-        elif sys.argv[1] == "patient" and "cancel" in sys.argv :
+        elif args[1] == "patient" and "cancel" in args :
             print('patient cancellation\n') 
 
             with open ("login_info","r") as email:
@@ -57,7 +56,7 @@ def check_arguments():
 
             return bookings.patient_cancel(service, slot,calendarId='codeclinics00@gmail.com')   
 
-        elif sys.argv[1] == "volunteer":
+        elif args[1] == "volunteer":
 
             with open ("login_info","r") as email:
                 mail = email.readlines()
@@ -72,7 +71,7 @@ def check_arguments():
            
             return bookings.volunteer_slot(date, summary, description, creator, meet)
         
-        elif sys.argv[1] == "patient":
+        elif args[1] == "patient":
 
             with open ("login_info","r") as email:
                 mail = email.readlines()
@@ -109,4 +108,4 @@ Scheduling Events
 
 """)
 
-check_arguments()
+check_arguments(args)
