@@ -1,6 +1,10 @@
 import os.path
 
 def login_func():
+    """
+    get the user informatiom
+    """
+    
     if os.path.exists('login_info'):
         print('User details exist')
         login_info = open("login_info", "a")

@@ -11,6 +11,7 @@ def cli_start():
     pass 
 
 def check_arguments():
+    """"""
 
     path = os.path.expanduser('~/')
 
@@ -24,7 +25,7 @@ def check_arguments():
         return credentials.getCredentials()
 
 
-    if (len(sys.argv) == 2 or len(sys.argv) == 3) and os.path.exists(path +'.token.pickle'):
+    if (len(sys.argv) == 2 or len(sys.argv) == 3):
         
         if sys.argv[1] == "help":
             return get_help()
@@ -43,14 +44,14 @@ def check_arguments():
             return bookings.volunteer_cancel_slot()
 
         elif sys.argv[1] == "patient" and "cancel" in sys.argv :
-            print('patient cancel') 
+            print('patient cancellation\n') 
 
             with open ("login_info","r") as email:
                 mail = email.readlines()
                 p_mail = mail[1].replace("\n", "")
 
             calendar = bookings.view_calendar()
-            slot = int(input("Please a slot number to cancel : "))
+            slot = int(input("Please select a slot number to cancel : "))
             patient = p_mail
             service = credentials.getCredentials()
 
@@ -63,11 +64,11 @@ def check_arguments():
                 v_mail = mail[1].replace("\n", "")
 
             conf = ""
-            date = input("Date & Time : ")
+            date = input("Date & Time (12 jan 12.30pm): ")
             summary = input("Event Summary : ")
             description = input ("Event Description : ")
             creator = v_mail
-            meet =  input("Would you like to set a google-meet (Y/N) : ")
+            meet =  input("Would you like to set a google-meet (Y/N)? : ")
            
             return bookings.volunteer_slot(date, summary, description, creator, meet)
         
@@ -78,7 +79,7 @@ def check_arguments():
                 p_mail = mail[1].replace("\n", "")
 
             calendar = bookings.view_calendar()
-            slot = int(input("Please a slot number to book : "))
+            slot = int(input("Please select a slot number to book : "))
             patient = p_mail
             service = credentials.getCredentials()
             
@@ -90,6 +91,10 @@ def check_arguments():
 
 
 def get_help():
+    """
+    Provides help information to the user
+    """
+
     print("""These are the Google calendar_setup commands that can be used in various situations:
         
 Setup and Login

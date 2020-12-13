@@ -17,6 +17,9 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 
 def main():
+    """
+    get the overall calendar of the up-coming 7 days
+    """
 
     service = credentials.getCredentials()
 
@@ -180,6 +183,10 @@ def main():
     #print(date_list)
 
 def day_details(date):
+    """
+    give overall events for the day
+    :param date: The date, in the format "yyyy-mm-dd" gets the event for the whole day
+    """
 
     event_details, date_list, event_list = main()
 
