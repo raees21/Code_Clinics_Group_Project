@@ -38,6 +38,30 @@ Scheduling Events
                 self.assertTrue(output.find('created event') > -1)
 
 
+    def test__volunteer_event_creation_time(self):
+
+        with captured_io(StringIO("25 jan 2020 12.30pm\ntest1\ntest1\ny\n")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'volunteer'])
+                output = out.getvalue().strip()
+                self.assertTrue(output.find('starts at:  2020-01-25T12:00:00+02:00') > -1)
+
+
+    def test__volunteer_event_end(self):
+
+        with captured_io(StringIO("25 jan 2020 12.30pm\ntest1\ntest1\ny\n")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'volunteer'])
+                output = out.getvalue().strip()
+                self.assertTrue(output.find('ends at:  2020-01-25T13:30:00+02:00') > -1)
+
+
+    def test__volunteer_event_summary(self):
+
+        with captured_io(StringIO("25 jan 2020 12.30pm\ntest1\ntest1\ny\n")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'volunteer'])
+                output = out.getvalue().strip()
+                self.assertTrue(output.find('summary:  test1') > -1)
+
+
     def test__volunteer_event_delete(self):
 
         with captured_io(StringIO("0\n")) as (out, err) :
@@ -91,6 +115,32 @@ Scheduling Events
 
                 self.assertTrue(output.find('08:00:00') > -1)
 
+
+    def test_view_full_calendar_meet(self):
+
+        with captured_io(StringIO("")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'events', '2020-12-18'])
+                output = out.getvalue().strip()
+
+                self.assertTrue(output.find('Google Meet Link') > -1)
+
+
+    def test_view_full_calendar_attendees(self):
+
+        with captured_io(StringIO("")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'events', '2020-12-18'])
+                output = out.getvalue().strip()
+
+                self.assertTrue(output.find('Attendees') > -1)
+
+
+    def test_view_full_calendar_Organizer(self):
+
+        with captured_io(StringIO("")) as (out, err) :
+                cli.check_arguments(args=['cli.py', 'events', '2020-12-18'])
+                output = out.getvalue().strip()
+
+                self.assertTrue(output.find('Organizer') > -1)
 
 
 if __name__ == '__main__':
