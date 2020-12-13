@@ -80,7 +80,7 @@ def volunteer_slot(start_time, summary, desc, creator, meet):
         
         if len(timer):
             start = timer[0]
-            end = start + timedelta(minutes = 30)
+            end = start + timedelta(minutes = 90)
 
         event_result = service.events().insert(calendarId="codeclinics00@gmail.com",
             body={
