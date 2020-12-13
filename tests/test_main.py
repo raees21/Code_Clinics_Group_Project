@@ -64,7 +64,7 @@ Scheduling Events
 
     def test__volunteer_event_delete(self):
 
-        with captured_io(StringIO("0\n")) as (out, err) :
+        with captured_io(StringIO("7\n")) as (out, err) :
                 cli.check_arguments(args=['cli.py', 'volunteer', 'cancel'])
                 output = out.getvalue().strip()
 
@@ -73,7 +73,7 @@ Scheduling Events
 
     def test_patient_event_creation(self):
 
-        with captured_io(StringIO("0\n")) as (out, err) :
+        with captured_io(StringIO("7\n")) as (out, err) :
                 cli.check_arguments(args=['cli.py', 'patient'])
                 output = out.getvalue().strip()
 
@@ -82,7 +82,7 @@ Scheduling Events
 
     def test_patient_event_cancel(self):
 
-        with captured_io(StringIO("0\n")) as (out, err) :
+        with captured_io(StringIO("7\n")) as (out, err) :
                 cli.check_arguments(args=['cli.py', 'patient', 'cancel'])
                 output = out.getvalue().strip()
 
